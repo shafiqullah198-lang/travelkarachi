@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Sidebar } from "./components/Sidebar";
 import { Navbar } from "./components/Navbar";
+import { LoginPage } from "./components/LoginPage";
 import { LayoutDashboard, Plane, Users, BarChart3, Settings } from "lucide-react";
 import { Dashboard } from "./components/dashboard/Dashboard";
 import { FlightBookings } from "./components/bookings/FlightBookings";
@@ -41,8 +42,13 @@ function PlaceholderScreen({ title }: { title: string }) {
 }
 
 export default function App() {
-  const [screen, setScreen]           = useState<Screen>("dashboard");
+  const [isLoggedIn, setIsLoggedIn]               = useState(false);
+  const [screen, setScreen]                       = useState<Screen>("dashboard");
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+
+  if (!isLoggedIn) {
+    return <LoginPage onLogin={() => setIsLoggedIn(true)} />;
+  }
 
   const meta        = screenMeta[screen];
   const isFullBleed = screen === "flight-pos";
@@ -51,7 +57,7 @@ export default function App() {
     switch (screen) {
       case "dashboard":          return <Dashboard />;
       case "flight-bookings":    return <FlightBookings />;
-      case "flight-pos":         return <FlightPOS />;
+      case "flight-pos":         return <FlightPOS onBookFlight={() => setScreen("flight-management")} />;
       case "flight-management":  return <PassengerBookingForm />;
       case "segment-management": return <SegmentManagement />;
       case "sub-agents":         return <SubAgentManagement />;
@@ -92,17 +98,17 @@ export default function App() {
       <nav
         className="md:hidden fixed bottom-0 inset-x-0 z-40 flex items-stretch"
         style={{
-          background: "rgba(10,14,27,0.97)",
+          background: "rgba(255,255,255,0.96)",
           backdropFilter: "blur(20px)",
           WebkitBackdropFilter: "blur(20px)",
-          borderTop: "1px solid rgba(255,255,255,0.07)",
+          borderTop: "1px solid #E2E8F0",
           paddingBottom: "env(safe-area-inset-bottom)",
           height: "calc(60px + env(safe-area-inset-bottom))",
         }}
       >
         {([
           { icon: <LayoutDashboard size={22} />, label: "Home",     screens: ["dashboard"]                                                              },
-          { icon: <Plane size={22} />,           label: "Flights",  screens: ["flight-bookings","flight-management","flight-pos","segment-management"]   },
+          { icon: <Plane size={22} />,           label: "Flights",  screens: ["flight-bookings","flight-pos","segment-management"]   },
           { icon: <Users size={22} />,           label: "Agents",   screens: ["sub-agents"]                                                             },
           { icon: <BarChart3 size={22} />,       label: "Reports",  screens: ["reports"]                                                                },
           { icon: <Settings size={22} />,        label: "Settings", screens: ["settings"]                                                               },
@@ -133,8 +139,8 @@ export default function App() {
               <span
                 className="transition-all duration-150"
                 style={{
-                  color: active ? "#818cf8" : "rgba(255,255,255,0.35)",
-                  filter: active ? "drop-shadow(0 0 6px rgba(129,140,248,0.6))" : "none",
+                  color: active ? "#4F46E5" : "#94A3B8",
+                  filter: active ? "drop-shadow(0 0 6px rgba(79,70,229,0.3))" : "none",
                   transform: active ? "translateY(-1px)" : "translateY(0)",
                 }}
               >
@@ -143,7 +149,7 @@ export default function App() {
               {/* Label */}
               <span
                 className="text-[10px] font-semibold tracking-wide transition-colors duration-150"
-                style={{ color: active ? "#818cf8" : "rgba(255,255,255,0.3)" }}
+                style={{ color: active ? "#4F46E5" : "#94A3B8" }}
               >
                 {item.label}
               </span>

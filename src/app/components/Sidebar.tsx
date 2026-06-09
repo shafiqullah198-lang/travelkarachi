@@ -69,7 +69,7 @@ export function Sidebar({ activeScreen, onNavigate, mobileOpen, onMobileClose }:
           baseH,
           active
             ? "bg-[#4F46E5] text-white"
-            : "text-white/55 hover:bg-[#1E293B] hover:text-white",
+            : "text-sidebar-foreground/65 hover:bg-sidebar-accent hover:text-sidebar-foreground",
         ].join(" ")}
       >
         {/* Active indicators */}
@@ -107,7 +107,7 @@ export function Sidebar({ activeScreen, onNavigate, mobileOpen, onMobileClose }:
           isMobile ? "py-3 min-h-[48px]" : "py-[11px]",
           isFlightScreen && !flightsOpen
             ? "bg-[#4F46E5] text-white"
-            : "text-white/55 hover:bg-[#1E293B] hover:text-white",
+            : "text-sidebar-foreground/65 hover:bg-sidebar-accent hover:text-sidebar-foreground",
         ].join(" ")}
       >
         <span className="flex-shrink-0 flex items-center justify-center" style={{ width: 20 }}>
@@ -133,7 +133,6 @@ export function Sidebar({ activeScreen, onNavigate, mobileOpen, onMobileClose }:
       >
         <div className="mt-1 space-y-0.5">
           {navItem(<BookOpen size={15} />,     "Flight Bookings",   "flight-bookings",    true, isMobile)}
-          {navItem(<Plane size={15} />,        "Flight Management", "flight-management",  true, isMobile)}
           {navItem(<ShoppingCart size={15} />, "Flight POS",        "flight-pos",         true, isMobile)}
           {navItem(<GitBranch size={15} />,    "Segment Mgmt",      "segment-management", true, isMobile)}
         </div>
@@ -146,7 +145,7 @@ export function Sidebar({ activeScreen, onNavigate, mobileOpen, onMobileClose }:
     <>
       {/* Logo */}
       <div className="flex items-center gap-3 px-4 py-5 flex-shrink-0"
-        style={{ borderBottom: "1px solid rgba(255,255,255,0.08)" }}>
+        style={{ borderBottom: "1px solid var(--sidebar-border)" }}>
         <div
           className="w-8 h-8 rounded-lg flex-shrink-0 flex items-center justify-center shadow-lg"
           style={{ background: "linear-gradient(135deg,#4F46E5,#7C3AED)" }}
@@ -154,13 +153,13 @@ export function Sidebar({ activeScreen, onNavigate, mobileOpen, onMobileClose }:
           <Plane size={16} className="text-white" strokeWidth={2.5} />
         </div>
         {(isMobile || !collapsed) && (
-          <span className="text-white font-bold text-[15px] tracking-tight">AeroDesk</span>
+          <span className="text-sidebar-foreground font-bold text-[15px] tracking-tight">AeroDesk</span>
         )}
         {/* Close button — mobile only */}
         {isMobile && (
           <button
             onClick={onMobileClose}
-            className="ml-auto w-8 h-8 rounded-lg flex items-center justify-center text-white/40 hover:bg-white/10 hover:text-white transition-colors"
+            className="ml-auto w-8 h-8 rounded-lg flex items-center justify-center text-sidebar-foreground/40 hover:bg-sidebar-accent hover:text-sidebar-foreground transition-colors"
           >
             <X size={18} />
           </button>
@@ -170,7 +169,7 @@ export function Sidebar({ activeScreen, onNavigate, mobileOpen, onMobileClose }:
       {/* Nav items */}
       <nav className="flex-1 overflow-y-auto px-3 py-4 space-y-1 scrollbar-hide">
         {/* Section label */}
-        <p className={["text-white/30 uppercase text-[10px] font-bold tracking-widest px-3 mb-2",
+        <p className={["text-sidebar-foreground/30 uppercase text-[10px] font-bold tracking-widest px-3 mb-2",
           !isMobile && collapsed ? "hidden" : ""].join(" ")}>
           Main
         </p>
@@ -184,7 +183,7 @@ export function Sidebar({ activeScreen, onNavigate, mobileOpen, onMobileClose }:
           navItem(<Plane size={20} />, "Flights", "flight-pos", false, false)
         )}
 
-        <p className={["text-white/30 uppercase text-[10px] font-bold tracking-widest px-3 mt-4 mb-2",
+        <p className={["text-sidebar-foreground/30 uppercase text-[10px] font-bold tracking-widest px-3 mt-4 mb-2",
           !isMobile && collapsed ? "hidden" : ""].join(" ")}>
           Management
         </p>
@@ -196,10 +195,10 @@ export function Sidebar({ activeScreen, onNavigate, mobileOpen, onMobileClose }:
 
       {/* Collapse toggle — desktop only */}
       {!isMobile && (
-        <div className="px-3 py-4 flex-shrink-0" style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}>
+        <div className="px-3 py-4 flex-shrink-0" style={{ borderTop: "1px solid var(--sidebar-border)" }}>
           <button
             onClick={() => setCollapsed(!collapsed)}
-            className="w-full flex items-center justify-center gap-2 py-2.5 px-3 rounded-[10px] text-white/40 hover:bg-[#1E293B] hover:text-white transition-all duration-150"
+            className="w-full flex items-center justify-center gap-2 py-2.5 px-3 rounded-[10px] text-sidebar-foreground/40 hover:bg-sidebar-accent hover:text-sidebar-foreground transition-all duration-150"
           >
             {collapsed ? (
               <ChevronRight size={18} />
@@ -215,7 +214,7 @@ export function Sidebar({ activeScreen, onNavigate, mobileOpen, onMobileClose }:
 
       {/* Mobile: user profile strip at bottom */}
       {isMobile && (
-        <div className="px-4 py-4 flex-shrink-0" style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}>
+        <div className="px-4 py-4 flex-shrink-0" style={{ borderTop: "1px solid var(--sidebar-border)" }}>
           <div className="flex items-center gap-3">
             <div
               className="w-9 h-9 rounded-full flex items-center justify-center text-white text-[12px] font-bold flex-shrink-0"
@@ -224,8 +223,8 @@ export function Sidebar({ activeScreen, onNavigate, mobileOpen, onMobileClose }:
               AM
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-[13px] font-semibold text-white truncate">Admin User</p>
-              <p className="text-[11px] text-white/40 truncate">Super Admin</p>
+              <p className="text-[13px] font-semibold text-sidebar-foreground truncate">Admin User</p>
+              <p className="text-[11px] text-sidebar-foreground/40 truncate">Super Admin</p>
             </div>
           </div>
         </div>
@@ -237,7 +236,7 @@ export function Sidebar({ activeScreen, onNavigate, mobileOpen, onMobileClose }:
     <>
       {/* ── DESKTOP sidebar (md+) ─────────────────────────────────────────────── */}
       <aside
-        className="hidden md:flex flex-col h-full bg-[#0F172A] transition-all duration-300 flex-shrink-0"
+        className="hidden md:flex flex-col h-full bg-sidebar border-r border-sidebar-border transition-all duration-300 flex-shrink-0"
         style={{ width: collapsed ? 72 : 260 }}
       >
         {sidebarContent(false)}
@@ -251,20 +250,20 @@ export function Sidebar({ activeScreen, onNavigate, mobileOpen, onMobileClose }:
           "md:hidden fixed inset-0 z-40 transition-all duration-300",
           mobileOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none",
         ].join(" ")}
-        style={{ background: "rgba(0,0,0,0.55)", backdropFilter: "blur(2px)" }}
+        style={{ background: "rgba(0,0,0,0.45)", backdropFilter: "blur(2px)" }}
         onClick={onMobileClose}
       />
 
       {/* Drawer panel */}
       <aside
         className={[
-          "md:hidden fixed top-0 left-0 h-full z-50 flex flex-col bg-[#0F172A]",
+          "md:hidden fixed top-0 left-0 h-full z-50 flex flex-col bg-sidebar border-r border-sidebar-border",
           "transition-transform duration-300 ease-in-out",
           mobileOpen ? "translate-x-0" : "-translate-x-full",
         ].join(" ")}
         style={{
           width: 280,
-          boxShadow: mobileOpen ? "4px 0 32px rgba(0,0,0,0.35)" : "none",
+          boxShadow: mobileOpen ? "4px 0 32px rgba(15,23,42,0.12)" : "none",
           paddingTop: "env(safe-area-inset-top)",
           paddingBottom: "env(safe-area-inset-bottom)",
         }}
